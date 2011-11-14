@@ -1,0 +1,7 @@
+#!/bin/bash
+
+echo "CTID NPROC STATUS    IP    HOSTNAME"
+echo " 101     - stopped   -            -"
+echo " 102   205 running   -            -"
+echo " 103     - stopped   -            -"
+echo " 108    25 running   -            -"
