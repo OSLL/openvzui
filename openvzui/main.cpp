@@ -1,12 +1,10 @@
 #include <QApplication>
+#include "cvzcentralwidget.h"
 
-#include "cmainwindow.h"
-
-int main(int argc, char **argv)
+int main (int argc, char **argv)
 {
     QApplication app(argc, argv);
-    CMainWindow *wnd = new CMainWindow;
-    wnd->show();
-
+    CVZCentralWidget *window = new CVZCentralWidget();
+    window->show();
     return app.exec();
 }

@@ -1,25 +1,17 @@
 HEADERS += \
-    clistparser.h \
-    ctreeitem.h \
-    ctree.h \
-    cmainwindow.h \
-    ccentralwidget.h \
-    container.h \
-    ccontainertreemodel.h
+    cvzlistexec.h \
+    cvzcontainer.h \
+    cvzmodel.h \
+    cvzcontrolpane.h \
+    cvzcentralwidget.h
 
 SOURCES += \
-    clistparser.cpp \
-    ctreeitem.cpp \
-    ctree.cpp \
-    cmainwindow.cpp \
-    main.cpp \
-    ccentralwidget.cpp \
-    ccontainertreemodel.cpp
-
-
-
-
-
+    cvzlistexec.cpp \
+    cvzcontainer.cpp \
+    cvzmodel.cpp \
+    cvzcontrolpane.cpp \
+    cvzcentralwidget.cpp \
+    main.cpp
 
 
 
