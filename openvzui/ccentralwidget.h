@@ -4,9 +4,11 @@
 #include <QWidget>
 #include <QPushButton>
 #include <QStringList>
+#include <QTreeView>
 
 #include "ctree.h"
 #include "container.h"
+#include "ccontainertreemodel.h"
 
 class CCentralWidget : public QWidget
 {
@@ -15,22 +17,27 @@ class CCentralWidget : public QWidget
 public:
     CCentralWidget(QWidget *parent = 0);
 
-private:
-    QPushButton *startButton;
-    QPushButton *stopButton;
-    CTree *ctree;
-
 public slots:
-    void updateTree(QList<struct container_t> lst);
+    void updateTree(const QList<struct container_t> &lst);
+
+signals:
+    void startContainer(const QString &name);
+    void stopContainer(const QString &name);
+    void updateContainer();
+
+private:
+    QPushButton *_startButton;
+    QPushButton *_stopButton;
+    QPushButton *_updateButton;
+    CTree *_ctree;
+    CContainerTreeModel *_model;
+    QTreeView *_view;
 
 private slots:
     void enableButtons();
     void startCt();
     void stopCt();
-
-signals:
-    void startContainer(QString name);
-    void stopContainer(QString name);
+    void updateCt();
 };
 
 #endif // CCENTRALWIDGET_H

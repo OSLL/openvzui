@@ -15,7 +15,7 @@ public:
     CTree(QWidget *parent = 0);
 
 public slots:
-    void redrawTree(QList<struct container_t> lst);
+    void redrawTree(const QList<struct container_t> &lst);
     CTreeItem * getParentItem();
 };
 

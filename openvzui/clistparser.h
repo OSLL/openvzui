@@ -14,27 +14,23 @@ class CListParser : public QObject
     Q_OBJECT
 
 public:
-    QString cmd;
-    QStringList args;
-    QRegExp pattern;
-    QTimer timer;
-    QProcess proc;
-
-private slots:
-    void readOutput();
-    void onTime();
-
-public:
-    CListParser(qint32 interval = 3000, QObject * parent = 0);
+    CListParser(QObject * parent = 0);
     QString getCMD() const;
-    void setInterval(qint32 val);
 
 public slots:
-    void start();
     void execute();
 
 signals:
     void updated(QList<struct container_t> list);
+
+private:
+    const QString _cmd;
+    const QStringList _args;
+    const QRegExp _pattern;
+    QProcess * _proc;
+
+private slots:
+    void readOutput();
 };
 
 #endif // CLISTPARSER_H

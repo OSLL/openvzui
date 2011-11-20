@@ -1,43 +1,43 @@
 #include "ctreeitem.h"
 
 CTreeItem::CTreeItem(const struct container_t &ctid, QTreeWidget *parent)
-    : QTreeWidgetItem(parent, UserType), ctid(ctid.ctid), nproc(ctid.nproc), status(ctid.status)
+    : QTreeWidgetItem(parent, UserType), _ctid(ctid._ctid), _nproc(ctid._nproc), _status(ctid._status)
 {
-    QTreeWidgetItem * _nproc = new QTreeWidgetItem(Type);
-    _nproc->setText(0, "number of process: " + QString::number(ctid.nproc));
-    QTreeWidgetItem * _status = new QTreeWidgetItem(Type);
-    if (ctid.status == Running)
-        _status->setText(0, "state: running");
+    QTreeWidgetItem * nproc = new QTreeWidgetItem(Type);
+    nproc->setText(0, "number of process: " + QString::number(ctid._nproc));
+    QTreeWidgetItem * status = new QTreeWidgetItem(Type);
+    if (ctid._status == Running)
+        status->setText(0, "state: running");
     else
-        _status->setText(0, "state: stopped");
+        status->setText(0, "state: stopped");
 
-    addChild(_nproc);
-    addChild(_status);
+    addChild(nproc);
+    addChild(status);
 
-    setText(0, ctid.ctid);
+    setText(0, ctid._ctid);
 }
 
 QString CTreeItem::getCTID() const
 {
-    return ctid;
+    return _ctid;
 }
 
 qint32 CTreeItem::getNPROC() const
 {
-    return nproc;
+    return _nproc;
 }
 
 ContainerStatus CTreeItem::getStatus() const
 {
-    return status;
+    return _status;
 }
 
 QString CTreeItem::getIP() const
 {
-    return ip;
+    return _ip;
 }
 
 QString CTreeItem::getHostname() const
 {
-    return hostname;
+    return _hostname;
 }

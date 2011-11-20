@@ -9,11 +9,11 @@
 class CTreeItem : public QTreeWidgetItem
 {
 private:
-    QString ctid;
-    qint32 nproc;
-    ContainerStatus status;
-    QString ip;
-    QString hostname;
+    QString _ctid;
+    qint32 _nproc;
+    ContainerStatus _status;
+    QString _ip;
+    QString _hostname;
 
 public:
     CTreeItem(const struct container_t &ct, QTreeWidget *parent = 0);

@@ -1,60 +1,76 @@
 #include <QPushButton>
 #include <QVBoxLayout>
 #include <QHBoxLayout>
+#include <QDebug>
 
 #include "ccentralwidget.h"
 
 CCentralWidget::CCentralWidget(QWidget *parent)
     : QWidget(parent)
 {
-    startButton = new QPushButton(tr("start"));
-    stopButton = new QPushButton(tr("stop"));
-    ctree = new CTree;
+    _startButton = new QPushButton(tr("start"));
+    _stopButton = new QPushButton(tr("stop"));
+    _updateButton = new QPushButton(tr("update"));
+//    _ctree = new CTree;
+    _model = new CContainerTreeModel(this);
+    _view = new QTreeView(this);
+    _view->setModel(_model);
+    _view->setRootIndex(QModelIndex());
 
-    startButton->setEnabled(false);
-    stopButton->setEnabled(false);
+    _startButton->setEnabled(false);
+    _stopButton->setEnabled(false);
 
     QHBoxLayout *ctl = new QHBoxLayout;
     QVBoxLayout *main = new QVBoxLayout;
 
-    ctl->addWidget(startButton);
-    ctl->addWidget(stopButton);
-    main->addWidget(ctree);
+    ctl->addWidget(_startButton);
+    ctl->addWidget(_stopButton);
+    ctl->addWidget(_updateButton);
+//    main->addWidget(_ctree);
+    main->addWidget(_view);
     main->addLayout(ctl);
     setLayout(main);
 
-    connect(startButton, SIGNAL(clicked()), this, SLOT(startCt()));
-    connect(stopButton, SIGNAL(clicked()), this, SLOT(stopCt()));
-    connect(ctree, SIGNAL(itemSelectionChanged()), this, SLOT(enableButtons()));
+    connect(_startButton, SIGNAL(clicked()), this, SLOT(startCt()));
+    connect(_stopButton, SIGNAL(clicked()), this, SLOT(stopCt()));
+    connect(_updateButton, SIGNAL(clicked()), this, SLOT(updateCt()));
+//    connect(_ctree, SIGNAL(itemSelectionChanged()), this, SLOT(enableButtons()));
 }
 
-void CCentralWidget::updateTree(QList<struct container_t> lst)
+void CCentralWidget::updateTree(const QList<struct container_t> &lst)
 {
-    ctree->redrawTree(lst);
+    //_ctree->redrawTree(lst);
+    qDebug() << "signal recieved";
+    _model->update(lst);
 }
 
 void CCentralWidget::startCt()
 {
-    emit startContainer(ctree->getParentItem()->getCTID());
+    //emit startContainer(_ctree->getParentItem()->getCTID());
 }
 
 void CCentralWidget::stopCt()
 {
-    emit stopContainer(ctree->getParentItem()->getCTID());
+    //emit stopContainer(_ctree->getParentItem()->getCTID());
+}
+
+void CCentralWidget::updateCt()
+{
+    emit updateContainer();
 }
 
 void CCentralWidget::enableButtons()
 {
-    if (ctree->getParentItem() != NULL) {
-        if (ctree->getParentItem()->getStatus() == Running) {
-            startButton->setEnabled(false);
-            stopButton->setEnabled(true);
+/*    if (_ctree->getParentItem() != NULL) {
+        if (_ctree->getParentItem()->getStatus() == Running) {
+            _startButton->setEnabled(false);
+            _stopButton->setEnabled(true);
         } else {
-            startButton->setEnabled(true);
-            stopButton->setEnabled(false);
+            _startButton->setEnabled(true);
+            _stopButton->setEnabled(false);
         }
     } else {
-        startButton->setEnabled(false);
-        stopButton->setEnabled(false);
-    }
+        _startButton->setEnabled(false);
+        _stopButton->setEnabled(false);
+    }*/
 }

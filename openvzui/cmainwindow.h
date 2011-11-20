@@ -12,12 +12,12 @@ class CMainWindow : public QMainWindow
     Q_OBJECT
 
 private:
-    CCentralWidget *main;
-    CListParser parser;
+    CCentralWidget *_main;
+    CListParser *_parser;
 
 private slots:
-    void startContainer(QString name);
-    void stopContainer(QString name);
+    void startContainer(const QString &name);
+    void stopContainer(const QString &name);
 
 public:
     CMainWindow(QWidget *parent = 0);

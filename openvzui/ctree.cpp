@@ -11,7 +11,7 @@ CTree::CTree(QWidget *parent)
     clear();
 }
 
-void CTree::redrawTree(QList<struct container_t> lst)
+void CTree::redrawTree(const QList<struct container_t> &lst)
 {
     clear();
 

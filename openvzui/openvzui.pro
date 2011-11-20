@@ -4,7 +4,8 @@ HEADERS += \
     ctree.h \
     cmainwindow.h \
     ccentralwidget.h \
-    container.h
+    container.h \
+    ccontainertreemodel.h
 
 SOURCES += \
     clistparser.cpp \
@@ -12,7 +13,12 @@ SOURCES += \
     ctree.cpp \
     cmainwindow.cpp \
     main.cpp \
-    ccentralwidget.cpp
+    ccentralwidget.cpp \
+    ccontainertreemodel.cpp
+
+
+
+
 
 
 
