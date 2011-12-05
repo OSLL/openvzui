@@ -13,11 +13,10 @@ class CVZModel : public QAbstractItemModel
 {
     Q_OBJECT
 
-    QList<CVZContainer> * _ctlist;
+    QList<CVZContainer> _ctlist;
 
 public:
     CVZModel(QObject * parent = 0);
-    virtual ~CVZModel();
 
     virtual int columnCount(const QModelIndex &parent = QModelIndex()) const;
     virtual int rowCount(const QModelIndex &parent = QModelIndex()) const;

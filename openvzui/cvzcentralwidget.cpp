@@ -18,7 +18,10 @@ CVZCentralWidget::CVZCentralWidget(QWidget *parent) :
 
     connect(_listcmd, SIGNAL(update(QList<CVZContainer>)), _model, SLOT(update(QList<CVZContainer>)));
     connect(_ctl, SIGNAL(updateClicked()), _listcmd, SLOT(execute()));
+    connect(_view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateCtl(QModelIndex)));
     connect(_view, SIGNAL(activated(QModelIndex)), this, SLOT(updateCtl(QModelIndex)));
+    connect(_view, SIGNAL(pressed(QModelIndex)), this, SLOT(updateCtl(QModelIndex)));
+    connect(_view, SIGNAL(doubleClicked(QModelIndex)), this, SLOT(updateCtl(QModelIndex)));
     connect(this, SIGNAL(enableStart(bool)), _ctl, SLOT(enableStartButton(bool)));
     connect(this, SIGNAL(enableStop(bool)), _ctl, SLOT(enableStopButton(bool)));
 

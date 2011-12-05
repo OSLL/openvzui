@@ -23,6 +23,10 @@ CVZContainer::CVZContainer(const QString &description)
     }
 }
 
+CVZContainer::CVZContainer(const QString &ctid, VZContainerStatus status, quint32 nproc)
+    : _status(status), _nproc(nproc), _ctid(ctid)
+{}
+
 void CVZContainer::validate() const
 {
     if (!isValid())
@@ -47,7 +51,61 @@ CVZContainer::VZContainerStatus CVZContainer::status() const
     return _status;
 }
 
+void CVZContainer::setStatus(enum VZContainerStatus status)
+{
+    _status = status;
+}
+
+void CVZContainer::setNProc(quint32 nproc)
+{
+    _nproc = nproc;
+}
+
 bool CVZContainer::isValid() const
 {
     return (_status != CVZContainer::WrongState);
+}
+
+bool CVZContainer::isStatusChanged(const CVZContainer &ct) const
+{
+    return (status() != ct.status());
+}
+
+bool CVZContainer::isNProcessChanged(const CVZContainer &ct) const
+{
+    return (nproc() != ct.nproc());
+}
+
+bool CVZContainer::operator<(const CVZContainer &ct) const
+{
+    return (ctid() < ct.ctid());
+}
+
+bool CVZContainer::operator>(const CVZContainer &ct) const
+{
+    return (ctid() > ct.ctid());
+}
+
+bool CVZContainer::operator==(const CVZContainer &ct) const
+{
+    return (ctid() == ct.ctid());
+}
+
+bool CVZContainer::operator!=(const CVZContainer &ct) const
+{
+    return (ctid() != ct.ctid());
+}
+
+CVZContainer::operator QString() const
+{
+    QString res = ctid() + " ";
+    if (status() == Running) {
+        res += QString::number(nproc());
+        res += " running";
+    } else {
+        res += "-";
+        res += " stopped";
+    }
+
+    return res;
 }

@@ -1,4 +1,5 @@
 #include <QDebug>
+#include <QtAlgorithms>
 #include "cvzlistexec.h"
 
 CVZListExec::CVZListExec(QObject *parent) :
@@ -27,6 +28,7 @@ void CVZListExec::readCmdOutput()
             result.append(ct);
         ++it;
     }
+    qSort(result.begin(), result.end());
 
     emit update(result);
 }
