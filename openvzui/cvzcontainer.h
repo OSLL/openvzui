@@ -28,16 +28,13 @@ public:
     void setNProc(quint32 nproc);
 
     bool isValid() const;
-    bool isStatusChanged(const CVZContainer &ct) const;
-    bool isNProcessChanged(const CVZContainer &ct) const;
-    bool operator<(const CVZContainer &ct) const;
-    bool operator>(const CVZContainer &ct) const;
     bool operator==(const CVZContainer &ct) const;
-    bool operator!=(const CVZContainer &ct) const;
+    bool operator<(const CVZContainer &ct) const;
 
     operator QString() const;
 
     static const QRegExp _pattern;
+    static CVZContainer dummy(const QString &ctid);
 };
 
 #endif // CVZCONTAINER_H

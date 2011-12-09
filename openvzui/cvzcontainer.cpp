@@ -66,34 +66,14 @@ bool CVZContainer::isValid() const
     return (_status != CVZContainer::WrongState);
 }
 
-bool CVZContainer::isStatusChanged(const CVZContainer &ct) const
-{
-    return (status() != ct.status());
-}
-
-bool CVZContainer::isNProcessChanged(const CVZContainer &ct) const
-{
-    return (nproc() != ct.nproc());
-}
-
-bool CVZContainer::operator<(const CVZContainer &ct) const
-{
-    return (ctid() < ct.ctid());
-}
-
-bool CVZContainer::operator>(const CVZContainer &ct) const
-{
-    return (ctid() > ct.ctid());
-}
-
 bool CVZContainer::operator==(const CVZContainer &ct) const
 {
     return (ctid() == ct.ctid());
 }
 
-bool CVZContainer::operator!=(const CVZContainer &ct) const
+bool CVZContainer::operator<(const CVZContainer &ct) const
 {
-    return (ctid() != ct.ctid());
+    return (ctid() < ct.ctid());
 }
 
 CVZContainer::operator QString() const
@@ -108,4 +88,9 @@ CVZContainer::operator QString() const
     }
 
     return res;
+}
+
+CVZContainer CVZContainer::dummy(const QString &ctid)
+{
+    return CVZContainer(ctid, WrongState, 0);
 }

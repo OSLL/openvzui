@@ -3,7 +3,7 @@
 #include "cvzlistexec.h"
 
 CVZListExec::CVZListExec(QObject *parent) :
-    QObject(parent), _cmd("vzlist"), _args("-a")
+    QObject(parent), _cmd("/home/mirovingen/aptu/parallels/vzlist"), _args("-a")
 {
     connect(&_proc, SIGNAL(finished(int)), this, SLOT(readCmdOutput()));
 }

@@ -17,10 +17,14 @@ class CVZCentralWidget : public QWidget
     CVZModel * _model;
     QTreeView * _view;
     CVZListExec * _listcmd;
+    QProcess * _util;
     QString _current;
+    QString _ctCmd;
 
 private slots:
     void updateCtl(const QModelIndex &index);
+    void runCt();
+    void stopCt();
 
 public:
     explicit CVZCentralWidget(QWidget *parent = 0);

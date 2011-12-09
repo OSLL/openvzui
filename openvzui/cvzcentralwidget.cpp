@@ -3,12 +3,13 @@
 #include "cvzcentralwidget.h"
 
 CVZCentralWidget::CVZCentralWidget(QWidget *parent) :
-    QWidget(parent)
+    QWidget(parent), _ctCmd("/home/mirovingen/aptu/parallels/vzctl")
 {
     _ctl = new CVZControlPane(this);
     _model = new CVZModel(this);
     _view = new QTreeView(this);
     _listcmd = new CVZListExec(this);
+    _util = new QProcess(this);
 
     QVBoxLayout *main = new QVBoxLayout;
     main->addWidget(_view);
@@ -18,6 +19,9 @@ CVZCentralWidget::CVZCentralWidget(QWidget *parent) :
 
     connect(_listcmd, SIGNAL(update(QList<CVZContainer>)), _model, SLOT(update(QList<CVZContainer>)));
     connect(_ctl, SIGNAL(updateClicked()), _listcmd, SLOT(execute()));
+    connect(_util, SIGNAL(finished(int)), _listcmd, SLOT(execute()));
+    connect(_ctl, SIGNAL(startClicked()), this, SLOT(runCt()));
+    connect(_ctl, SIGNAL(stopClicked()), this, SLOT(stopCt()));
     connect(_view, SIGNAL(clicked(QModelIndex)), this, SLOT(updateCtl(QModelIndex)));
     connect(_view, SIGNAL(activated(QModelIndex)), this, SLOT(updateCtl(QModelIndex)));
     connect(_view, SIGNAL(pressed(QModelIndex)), this, SLOT(updateCtl(QModelIndex)));
@@ -45,4 +49,24 @@ void CVZCentralWidget::updateCtl(const QModelIndex &index)
             emit enableStop(false);
         }
     }
+}
+
+void CVZCentralWidget::runCt()
+{
+    QStringList args("start");
+    args << _current;
+
+    qDebug() << "execute: " << _ctCmd << " " << args;
+
+    _util->start(_ctCmd, args);
+}
+
+void CVZCentralWidget::stopCt()
+{
+    QStringList args("stop");
+    args << _current;
+
+    qDebug() << "execute: " << _ctCmd << " " << args;
+
+    _util->start(_ctCmd, args);
 }

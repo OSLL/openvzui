@@ -49,6 +49,8 @@ int main(int argc, char *argv[])
         err << "test environment vzctl usage:" << endl
             << "vzctl (start | stop | add) <ctid>" << endl
             << "where <ctid> - container id" << endl;
+
+        return -1;
     }
     qsrand(1);
 
@@ -56,18 +58,22 @@ int main(int argc, char *argv[])
 
     QString cmd(argv[1]);
     QString ctid(argv[2]);
-    int pos = lst.indexOf(ctid);
+    int pos = lst.indexOf(CVZContainer::dummy(ctid));
 
-    if (cmd == "start") {
-        lst[pos].setStatus(CVZContainer::Running);
-        lst[pos].setNProc(qrand()%128 + 1);
-    } else if (cmd == "stop") {
-        lst[pos].setStatus(CVZContainer::Stopped);
-        lst[pos].setNProc(0);
-    } else if (cmd == "add") {
-        lst.append(CVZContainer(ctid, CVZContainer::Stopped, 0));
+    qDebug() << "cmd: " << argv[0] << cmd << ctid;
+
+    if (pos != -1) {
+        if (cmd == "start") {
+            lst[pos].setStatus(CVZContainer::Running);
+            lst[pos].setNProc(qrand()%128 + 1);
+        } else if (cmd == "stop") {
+            lst[pos].setStatus(CVZContainer::Stopped);
+            lst[pos].setNProc(0);
+        } else if (cmd == "add") {
+            lst.append(CVZContainer(ctid, CVZContainer::Stopped, 0));
+        }
+        writeCfgFile(lst);
     }
-    writeCfgFile(lst);
 
     return 0;
 }
