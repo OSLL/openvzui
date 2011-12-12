@@ -1,23 +1,33 @@
 #include <QVBoxLayout>
+#include <QHBoxLayout>
 #include <QDebug>
 #include "cvzcentralwidget.h"
 
 CVZCentralWidget::CVZCentralWidget(QWidget *parent) :
-    QWidget(parent), _ctCmd("/home/mirovingen/aptu/parallels/vzctl")
+    QWidget(parent), _currentRunning(false), _ctCmd("vzctl")
 {
     _ctl = new CVZControlPane(this);
+    _res = new CVZResourcePanel(this);
+    _pars = new CVZResourceParser(this);
     _model = new CVZModel(this);
     _view = new QTreeView(this);
     _listcmd = new CVZListExec(this);
     _util = new QProcess(this);
 
     QVBoxLayout *main = new QVBoxLayout;
-    main->addWidget(_view);
+    QHBoxLayout *subMain = new QHBoxLayout;
+
+    subMain->addWidget(_view);
+    subMain->addWidget(_res);
+    subMain->setStretch(0,1);
+    subMain->setStretch(1,3);
+    main->addLayout(subMain);
     main->addWidget(_ctl);
 
     _view->setModel(_model);
 
     connect(_listcmd, SIGNAL(update(QList<CVZContainer>)), _model, SLOT(update(QList<CVZContainer>)));
+    connect(_pars, SIGNAL(update(QList<CVZResource>)), _res, SLOT(update(QList<CVZResource>)));
     connect(_ctl, SIGNAL(updateClicked()), _listcmd, SLOT(execute()));
     connect(_util, SIGNAL(finished(int)), _listcmd, SLOT(execute()));
     connect(_ctl, SIGNAL(startClicked()), this, SLOT(runCt()));
@@ -29,8 +39,10 @@ CVZCentralWidget::CVZCentralWidget(QWidget *parent) :
     connect(this, SIGNAL(enableStart(bool)), _ctl, SLOT(enableStartButton(bool)));
     connect(this, SIGNAL(enableStop(bool)), _ctl, SLOT(enableStopButton(bool)));
 
-    setLayout(main);
     _listcmd->execute();
+    _res->hide();
+    startTimer(1000);
+    setLayout(main);
 }
 
 void CVZCentralWidget::updateCtl(const QModelIndex &index)
@@ -42,9 +54,11 @@ void CVZCentralWidget::updateCtl(const QModelIndex &index)
         qDebug() << "current changed: " + _current;
 
         if (ct.status() == CVZContainer::Running) {
+            _currentRunning = true;
             emit enableStart(false);
             emit enableStop(true);
         } else {
+            _currentRunning = false;
             emit enableStart(true);
             emit enableStop(false);
         }
@@ -69,4 +83,15 @@ void CVZCentralWidget::stopCt()
     qDebug() << "execute: " << _ctCmd << " " << args;
 
     _util->start(_ctCmd, args);
+}
+
+void CVZCentralWidget::timerEvent(QTimerEvent *)
+{
+    if (_currentRunning)
+    {
+        _pars->execute(_current);
+        _res->show();
+    } else {
+        _res->hide();
+    }
 }
