@@ -26,9 +26,9 @@ QVariant CVZModel::data(const QModelIndex &index, int role) const
     if ( (role != Qt::DisplayRole) || (!index.isValid()) || (_ctlist.isEmpty()) )
         return QVariant();
 
-    if (index.internalId() == -1) {
+    if (index.internalId() == -1)
         return QVariant((_ctlist.at(index.row())).ctid());
-    } else {
+    else {
         CVZContainer ct = _ctlist.at(index.internalId());
         switch (index.row()) {
         case 0:
