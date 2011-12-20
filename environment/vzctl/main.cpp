@@ -69,11 +69,11 @@ int main(int argc, char *argv[])
         } else if (cmd == "stop") {
             lst[pos].setStatus(CVZContainer::Stopped);
             lst[pos].setNProc(0);
-        } else if (cmd == "add") {
-            lst.append(CVZContainer(ctid, CVZContainer::Stopped, 0));
         }
-        writeCfgFile(lst);
+    } else if (cmd == "add") {
+        lst.append(CVZContainer(ctid, CVZContainer::Stopped, 0));
     }
+    writeCfgFile(lst);
 
     return 0;
 }
