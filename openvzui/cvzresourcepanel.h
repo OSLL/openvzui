@@ -4,8 +4,9 @@
 #include <QWidget>
 #include <QLabel>
 #include <QProgressBar>
-#include "cvzresource.h"
 #include <QScrollArea>
+
+#include "cvzresource.h"
 
 class CVZResourcePanel : public QWidget
 {

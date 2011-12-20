@@ -24,23 +24,23 @@ class CVZCentralWidget : public QWidget
     QProcess * _util;
     QString _current;
     bool _currentRunning;
-    QString _ctCmd;
-    void timerEvent(QTimerEvent *);
 
 private slots:
     void updateCtl(const QModelIndex &index);
     void runCt();
     void stopCt();
+    void timerEvent(QTimerEvent *);
 
 public:
     explicit CVZCentralWidget(QWidget *parent = 0);
 
+    static const QString _vzctlcmd;
+    static const QString _ctstart;
+    static const QString _ctstop;
+
 signals:
     void enableStart(bool);
     void enableStop(bool);
-
-public slots:
-
 };
 
 #endif // CVZCENTRALWIDGET_H

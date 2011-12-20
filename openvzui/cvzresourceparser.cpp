@@ -1,18 +1,22 @@
 #include <QDebug>
+
 #include "cvzresourceparser.h"
 
+const QString CVZResourceParser::_cmd = "cat";
+const QString CVZResourceParser::_procdir = "/proc/bc/";
+const QString CVZResourceParser::_resourcefile = "/resources";
+
 CVZResourceParser::CVZResourceParser(QObject *parent) :
-    QObject(parent), _cmd("cat")
+    QObject(parent)
 {
     connect(&_proc, SIGNAL(finished(int)), this, SLOT(readCmdOutput()));
 }
 
-void CVZResourceParser::execute(QString args)
+void CVZResourceParser::execute(QString ctid)
 {
-    _ctid = args;
-    _args.clear();
-    _args << "/proc/bc/" + _ctid + "/resources";
-    _proc.start(_cmd, _args, QProcess::ReadOnly);
+    QStringList args;
+    args << _procdir + ctid + _resourcefile;
+    _proc.start(_cmd, args, QProcess::ReadOnly);
 }
 
 void CVZResourceParser::readCmdOutput()

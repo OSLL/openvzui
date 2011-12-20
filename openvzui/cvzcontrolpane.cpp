@@ -1,4 +1,5 @@
 #include <QHBoxLayout>
+
 #include "cvzcontrolpane.h"
 
 CVZControlPane::CVZControlPane(QWidget *parent) :

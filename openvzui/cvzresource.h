@@ -6,7 +6,6 @@
 
 class CVZResource
 {
-    //QString _ctid;
     QString _resourceName;
     quint32 _held;
     quint32 _maxheld;

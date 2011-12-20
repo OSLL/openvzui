@@ -8,14 +8,10 @@
 
 #include "cvzcontainer.h"
 
-#define TIMEDELAY 1000
-
 class CVZListExec : public QObject
 {
     Q_OBJECT
 
-    const QString _cmd;
-    const QStringList _args;
     QProcess _proc;
 
 private slots:
@@ -24,6 +20,8 @@ private slots:
 public:
     explicit CVZListExec(QObject *parent = 0);
 
+    static const QString _vzlistcmd;
+    static const QString _listall;
 signals:
     void update(const QList<CVZContainer> &list);
 

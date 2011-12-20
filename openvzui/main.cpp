@@ -1,4 +1,5 @@
 #include <QApplication>
+
 #include "cvzcentralwidget.h"
 
 int main (int argc, char **argv)

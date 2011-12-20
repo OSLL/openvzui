@@ -1,4 +1,5 @@
 #include <QDebug>
+
 #include "cvzcontainer.h"
 
 const QRegExp CVZContainer::_pattern = QRegExp("(\\w+)\\s+(-|\\d+)\\s+(running|stopped)");

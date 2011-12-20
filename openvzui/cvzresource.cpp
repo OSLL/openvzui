@@ -24,8 +24,7 @@ CVZResource::CVZResource(const QString &description)
 
 CVZResource::CVZResource(QString resourceName, quint32 held, quint32 maxheld, quint32 barrier, quint32 limit, quint32 failcnt):
         _resourceName(resourceName), _held(held), _maxheld(maxheld), _barrier(barrier), _limit(limit), _failcnt(failcnt)
-{
-}
+{}
 
 QString CVZResource::getResourceName(void) const
 {

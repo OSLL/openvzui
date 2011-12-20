@@ -1,10 +1,15 @@
 #include <QVBoxLayout>
 #include <QHBoxLayout>
 #include <QDebug>
+
 #include "cvzcentralwidget.h"
 
+const QString CVZCentralWidget::_vzctlcmd = "vzctl";
+const QString CVZCentralWidget::_ctstart = "start";
+const QString CVZCentralWidget::_ctstop = "stop";
+
 CVZCentralWidget::CVZCentralWidget(QWidget *parent) :
-    QWidget(parent), _currentRunning(false), _ctCmd("vzctl")
+    QWidget(parent), _currentRunning(false)
 {
     _ctl = new CVZControlPane(this);
     _res = new CVZResourcePanel(this);
@@ -67,22 +72,22 @@ void CVZCentralWidget::updateCtl(const QModelIndex &index)
 
 void CVZCentralWidget::runCt()
 {
-    QStringList args("start");
+    QStringList args(_ctstart);
     args << _current;
 
-    qDebug() << "execute: " << _ctCmd << " " << args;
+    qDebug() << "execute: " << _vzctlcmd << " " << args;
 
-    _util->start(_ctCmd, args);
+    _util->start(_vzctlcmd, args);
 }
 
 void CVZCentralWidget::stopCt()
 {
-    QStringList args("stop");
+    QStringList args(_ctstop);
     args << _current;
 
-    qDebug() << "execute: " << _ctCmd << " " << args;
+    qDebug() << "execute: " << _vzctlcmd << " " << args;
 
-    _util->start(_ctCmd, args);
+    _util->start(_vzctlcmd, args);
 }
 
 void CVZCentralWidget::timerEvent(QTimerEvent *)

@@ -1,16 +1,20 @@
 #include <QDebug>
 #include <QtAlgorithms>
+
 #include "cvzlistexec.h"
 
+const QString CVZListExec::_vzlistcmd = "vzlist";
+const QString CVZListExec::_listall = "-a";
+
 CVZListExec::CVZListExec(QObject *parent) :
-    QObject(parent), _cmd("vzlist"), _args("-a")
+    QObject(parent)
 {
     connect(&_proc, SIGNAL(finished(int)), this, SLOT(readCmdOutput()));
 }
 
 void CVZListExec::execute()
 {
-    _proc.start(_cmd, _args, QProcess::ReadOnly);
+    _proc.start(_vzlistcmd, QStringList(_listall), QProcess::ReadOnly);
 }
 
 void CVZListExec::readCmdOutput()

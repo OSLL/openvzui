@@ -10,9 +10,6 @@ class CVZResourceParser : public QObject
 {
     Q_OBJECT
 
-    QString _ctid;
-    const QString _cmd;
-    QStringList _args;
     QProcess _proc;
 
 private slots:
@@ -21,11 +18,15 @@ private slots:
 public:
     explicit CVZResourceParser(QObject *parent = 0);
 
+    static const QString _cmd;
+    static const QString _procdir;
+    static const QString _resourcefile;
+
 signals:
     void update(const QList<CVZResource> &list);
 
 public slots:
-    void execute(QString args);
+    void execute(QString ctid);
 };
 
 #endif // CVZRESOURCEPARSER_H
